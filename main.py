@@ -1,10 +1,5 @@
-import json
 import requests
-
-from fastapi import FastAPI, HTTPException
-
-import schema
-from schema import VPABase
+from fastapi import FastAPI
 
 app = FastAPI()
 
@@ -28,7 +23,8 @@ async def check_virtual_address(merchant_id: str, merchant_ref_no: str, virtual_
 
 
 @app.post("/collect-transaction")
-def collect_transaction(merchant_id: str, order_no: str, payer_virtual_addr: str, amount: int, remarks: str, expiry: int):
+def collect_transaction(merchant_id: str, order_no: str, payer_virtual_addr: str, amount: int, remarks: str,
+                        expiry: int):
     url = "https://upitestv2.hdfcbank.com/upi/meTransCollectSvc"
     headers = {
         "Content-Type": "application/json",
@@ -65,8 +61,8 @@ def transaction_status(merchant_id: str, order_no: str, upi_txn_id: int):
 
 
 @app.post("/refund-request")
-def refund_request(merchant_id: str, new_order_no: str, original_order_no:str,
-                   original_trn_ref_no: int, original_cust_ref_no: int, remarks: str, refund_amt: int, currency:str,
+def refund_request(merchant_id: str, new_order_no: str, original_order_no: str,
+                   original_trn_ref_no: int, original_cust_ref_no: int, remarks: str, refund_amt: int, currency: str,
                    transaction_type: str, payment_type: str):
     url = "https://upitestv2.hdfcbank.com/upi/refundReqSvc"
     headers = {
